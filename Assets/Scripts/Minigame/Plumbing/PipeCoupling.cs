@@ -27,7 +27,6 @@ public class PipeCoupling : MonoBehaviour
         float distance = Camera.main.transform.position.y - end.transform.position.y;
         Vector3 mousePos = ray.GetPoint(distance);
         Vector3 dragDirection = mousePos - end.transform.position;
-        print(dragDirection.magnitude);
 
         if (dragDirection.magnitude > minDistance)
         {

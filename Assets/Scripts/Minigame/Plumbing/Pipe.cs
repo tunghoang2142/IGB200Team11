@@ -46,13 +46,28 @@ public class Pipe : MonoBehaviour
 
             float diameter = GetDiameter();
             float height = new Vector3(dragDirection.x * end.transform.right.x, dragDirection.y * end.transform.right.y, dragDirection.z * end.transform.right.z).magnitude;
+
+            // TODO: change distance measuring method
             if (height > diameter && dragDirection.magnitude > minTurningDistance)
             {
                 GameObject coupling = Resources.Load<GameObject>(LocalPath.prefabs + "Coupling");
                 coupling = Instantiate(coupling);
                 coupling.transform.rotation = end.transform.rotation;
                 coupling.transform.position = end.transform.position;
-                // TODO: rotate the coupling depend on the direction of the mouse
+
+                // Rotate the coupling depend on the direction of the mouse
+                float turningAngle = Vector3.Angle(end.transform.right, dragDirection);
+                if (turningAngle > 90)
+                {
+                    print(end.transform.right);
+                    print(turningAngle);
+                    Vector3 rotation = new Vector3(180f * end.transform.right.x, 180f * end.transform.right.y, 180f * end.transform.right.z);
+                    print(rotation);
+                    coupling.transform.Rotate(rotation);
+
+                    //coupling.transform.GetChild(1).Rotate(rotation, Space.World);
+                }
+
                 Destroy(this);
                 return;
             }
@@ -98,10 +113,10 @@ public class Pipe : MonoBehaviour
         this.transform.position += end.transform.forward * length / 2;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        print(other.name);
-    }
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    print(other.name);
+    //}
 
     float GetLength()
     {
