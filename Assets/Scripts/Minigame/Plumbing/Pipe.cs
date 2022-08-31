@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pipe : MonoBehaviour
+public class Pipe : Plumbing
 {
-    public GameObject start;
-    public GameObject end;
-
-    public float Diameter { get { return GetDiameter(); } }
-    public float Length { get { return GetLength(); } }
+    //public float Diameter { get { return GetDiameter(); } }
+    //public float Length { get { return GetLength(); } }
 
     public float minTurningDistance = 1f;
-    public float connectDeviance = 0.3f; // How far between connection point can 2 pipes be connected when come into contact
-
     bool isDragging = false;
 
     // Start is called before the first frame update
@@ -24,12 +19,19 @@ public class Pipe : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //Debug.DrawLine(this.transform.position, ray.GetPoint(Camera.main.transform.position.y - end.transform.position.y), Color.red);
+
+        if (PipeGameManager.Instance.isGameOver || PipeGameManager.Instance.isGamePause)
+        {
+            return;
+        }
+
         Drag();
     }
 
     void Drag()
     {
-
         if (!Input.GetMouseButton(0))
         {
             isDragging = false;
@@ -44,28 +46,22 @@ public class Pipe : MonoBehaviour
             Vector3 mousePos = ray.GetPoint(distance);
             Vector3 dragDirection = mousePos - end.transform.position;
 
-            float diameter = GetDiameter();
             float height = new Vector3(dragDirection.x * end.transform.right.x, dragDirection.y * end.transform.right.y, dragDirection.z * end.transform.right.z).magnitude;
 
-            // TODO: change distance measuring method
-            if (height > diameter && dragDirection.magnitude > minTurningDistance)
+            // Turning the pipe
+            if (height > Diameter && height > minTurningDistance)
             {
                 GameObject coupling = Resources.Load<GameObject>(LocalPath.prefabs + "Coupling");
                 coupling = Instantiate(coupling);
                 coupling.transform.rotation = end.transform.rotation;
                 coupling.transform.position = end.transform.position;
+                StrechPipe(-coupling.GetComponent<PipeCoupling>().Length / 2);
 
                 // Rotate the coupling depend on the direction of the mouse
                 float turningAngle = Vector3.Angle(end.transform.right, dragDirection);
                 if (turningAngle > 90)
                 {
-                    print(end.transform.right);
-                    print(turningAngle);
-                    Vector3 rotation = new Vector3(180f * end.transform.right.x, 180f * end.transform.right.y, 180f * end.transform.right.z);
-                    print(rotation);
-                    coupling.transform.Rotate(rotation);
-
-                    //coupling.transform.GetChild(1).Rotate(rotation, Space.World);
+                    coupling.GetComponent<PipeCoupling>().Flip();
                 }
 
                 Destroy(this);
@@ -113,34 +109,29 @@ public class Pipe : MonoBehaviour
         this.transform.position += end.transform.forward * length / 2;
     }
 
-    //void OnTriggerEnter(Collider other)
+    //float GetLength()
     //{
-    //    print(other.name);
+    //    // Matrix respresent this transform
+    //    Matrix4x4 transform = this.transform.localToWorldMatrix;
+    //    // Rotate back to 0 degree
+    //    Matrix4x4 rotation = Matrix4x4.Rotate(this.transform.rotation).inverse;
+    //    // Scale it with forward vector
+    //    Matrix4x4 scale = Matrix4x4.Scale(this.transform.forward);
+    //    transform = transform * rotation * scale;
+    //    // Return the right scale of this transform
+    //    return transform.lossyScale.magnitude;
     //}
 
-    float GetLength()
-    {
-        // Matrix respresent this transform
-        Matrix4x4 transform = this.transform.localToWorldMatrix;
-        // Rotate back to 0 degree
-        Matrix4x4 rotation = Matrix4x4.Rotate(this.transform.rotation).inverse;
-        // Scale it with forward vector
-        Matrix4x4 scale = Matrix4x4.Scale(this.transform.forward);
-        transform = transform * rotation * scale;
-        // Return the right scale of this transform
-        return transform.lossyScale.magnitude;
-    }
-
-    float GetDiameter()
-    {
-        // Matrix respresent this transform
-        Matrix4x4 transform = this.transform.localToWorldMatrix;
-        // Rotate back to 0 degree
-        Matrix4x4 rotation = Matrix4x4.Rotate(this.transform.rotation).inverse;
-        // Scale it with right vector
-        Matrix4x4 scale = Matrix4x4.Scale(this.transform.right);
-        transform = transform * rotation * scale;
-        // Return the right scale of this transform
-        return transform.lossyScale.magnitude;
-    }
+    //float GetDiameter()
+    //{
+    //    // Matrix respresent this transform
+    //    Matrix4x4 transform = this.transform.localToWorldMatrix;
+    //    // Rotate back to 0 degree
+    //    Matrix4x4 rotation = Matrix4x4.Rotate(this.transform.rotation).inverse;
+    //    // Scale it with right vector
+    //    Matrix4x4 scale = Matrix4x4.Scale(this.transform.right);
+    //    transform = transform * rotation * scale;
+    //    // Return the right scale of this transform
+    //    return transform.lossyScale.magnitude;
+    //}
 }

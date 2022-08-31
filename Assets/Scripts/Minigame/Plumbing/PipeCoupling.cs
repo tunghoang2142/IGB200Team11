@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PipeCoupling : MonoBehaviour
+public class PipeCoupling : Plumbing
 {
-    public GameObject start;
-    public GameObject end;
-    public float minDistance = 0.5f; //TODO: Rename this
+    public float minPipeLength = 0.5f;
+    float bufferLength = 0.01f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +16,7 @@ public class PipeCoupling : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!Input.GetMouseButton(0))
+        if (!Input.GetMouseButton(0) || PipeGameManager.Instance.isGameOver)
         {
             return;
         }
@@ -28,24 +27,29 @@ public class PipeCoupling : MonoBehaviour
         Vector3 mousePos = ray.GetPoint(distance);
         Vector3 dragDirection = mousePos - end.transform.position;
 
-        if (dragDirection.magnitude > minDistance)
+        if (dragDirection.magnitude > minPipeLength)
         {
             GameObject pipe = Resources.Load<GameObject>(LocalPath.prefabs + "Pipe");
             pipe = Instantiate(pipe);
             Pipe script = pipe.GetComponent<Pipe>();
             pipe.transform.rotation = end.transform.rotation;
-            pipe.transform.position = end.transform.position;
             pipe.transform.position += end.transform.position - script.start.transform.position;
 
-            if (script.Length > minDistance)
+            if (script.Length > minPipeLength)
             {
-                script.StrechPipe(minDistance - script.Length);
+                script.StrechPipe(minPipeLength - script.Length + bufferLength);
             }
             else
             {
-                script.StrechPipe(script.Length - minDistance);
+                script.StrechPipe(script.Length - minPipeLength + bufferLength);
             }
             Destroy(this);
         }
+    }
+
+    public void Flip()
+    {
+        Vector3 rotation = this.transform.up * 180f;
+        this.transform.Rotate(rotation);
     }
 }
