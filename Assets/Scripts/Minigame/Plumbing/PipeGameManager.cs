@@ -7,6 +7,7 @@ public class PipeGameManager : MonoBehaviour
     public PipeUIManager UIManager;
     public bool isGamePause = false;
     public bool isGameOver = false;
+    public float timer = 30f;
 
     static PipeGameManager _instance;
 
@@ -36,7 +37,12 @@ public class PipeGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        timer -= Time.deltaTime;
+        UIManager.DisplayTimer(timer);
+        if(timer < 0)
+        {
+            GameOver();
+        }
     }
 
     public void Pause()
