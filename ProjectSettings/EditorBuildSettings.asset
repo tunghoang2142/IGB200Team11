@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Plumbing.unity
+    guid: be957568170e04962b510c5b0cf25ae5
   m_configObjects: {}

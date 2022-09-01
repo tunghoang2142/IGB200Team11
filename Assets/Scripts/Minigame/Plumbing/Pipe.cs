@@ -26,7 +26,6 @@ public class Pipe : Plumbing
         {
             return;
         }
-
         Drag();
     }
 
