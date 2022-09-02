@@ -34,7 +34,7 @@ public class PipeUIManager : MonoBehaviour
     public void End()
     {
         // Do something
-        SceneManager.LoadScene("TestMovement");
+        SceneManager.LoadScene("Win screen");
     }
 
     public void GameOver()
