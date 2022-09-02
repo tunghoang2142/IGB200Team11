@@ -1102,7 +1102,7 @@ GameObject:
   - component: {fileID: 944500805}
   - component: {fileID: 944500804}
   m_Layer: 6
-  m_Name: Ground (2)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1141,7 +1141,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3383ebd9d8544d8a91c4aa1938f6d2f, type: 2}
+  - {fileID: 2100000, guid: 5a08bf16006ff4da6b4ed357de261e85, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1283,7 +1283,7 @@ GameObject:
   - component: {fileID: 981148243}
   - component: {fileID: 981148242}
   m_Layer: 6
-  m_Name: Ground (1)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1322,7 +1322,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3383ebd9d8544d8a91c4aa1938f6d2f, type: 2}
+  - {fileID: 2100000, guid: 5a08bf16006ff4da6b4ed357de261e85, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
