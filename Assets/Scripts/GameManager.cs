@@ -37,4 +37,16 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
+
+    public static void Menu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+    }
+
+    public static void StartGame()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
+    }
 }
