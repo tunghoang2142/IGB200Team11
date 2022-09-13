@@ -37,7 +37,8 @@ public abstract class Plumbing : MonoBehaviour
         return transform.lossyScale.magnitude;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
+    //private void OnCollisionEnter(Collision collision)
     {
         print(collision.contacts[0].point);
         

@@ -38,6 +38,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
+    public static void LoadScene(int sceneNumber)
+    {
+        SceneManager.LoadScene(sceneNumber, LoadSceneMode.Single);
+    }
+
     public static void Menu()
     {
         Time.timeScale = 1;
@@ -48,5 +53,10 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(1, LoadSceneMode.Single);
+    }
+
+    public static void Quit()
+    {
+        Application.Quit();
     }
 }
