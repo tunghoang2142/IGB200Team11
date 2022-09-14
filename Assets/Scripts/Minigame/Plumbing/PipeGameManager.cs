@@ -37,6 +37,11 @@ public class PipeGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isGameOver || isGameOver)
+        {
+            return;
+        }
+
         timer -= Time.deltaTime;
         UIManager.DisplayTimer(timer);
         if(timer < 0)
