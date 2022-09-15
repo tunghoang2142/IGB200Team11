@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
     public bool isMoveable = true;
 
-    private int layerMask = 1 << 6; // Add layer 6 to layer mask
+    private int layerMask;
     NavMeshAgent agent;
     public GameObject cube;
 
@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        layerMask = LayerMask.GetMask("Ground");
         agent = this.GetComponent<NavMeshAgent>();
     }
 
@@ -37,13 +38,8 @@ public class Player : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        //Debug.DrawRay(ray.origin, ray.direction, Color.red);
-
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {
-            print(hit.transform.name);
-            Debug.DrawRay(ray.origin, ray.direction, Color.blue);
-            print(hit.point);
             agent.SetDestination(hit.point);
             cube.transform.position = hit.point;
         }
@@ -60,9 +56,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    // TODO: Put this to Game Manager
     public void AcceptJob()
     {
+        // TODO: Put this to Game Manager
         GameManager.LoadScene(currentJob);
     }
 
