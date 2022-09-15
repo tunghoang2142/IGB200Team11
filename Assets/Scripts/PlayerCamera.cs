@@ -37,10 +37,15 @@ public class PlayerCamera : MonoBehaviour
             {
                 if (hidenObject)
                 {
-                    hidenObject.SetActive(true);
+                    hidenObject.GetComponent<Renderer>().enabled = true;
                 }
                 hidenObject = hit.collider.gameObject;
-                hidenObject.SetActive(false);
+                hidenObject.GetComponent<Renderer>().enabled = false;
+            }
+            else if(hidenObject && hit.collider.gameObject != hidenObject)
+            {
+                hidenObject.GetComponent<Renderer>().enabled = true;
+                hidenObject = null;
             }
         }
     }
