@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9734cc77a2c0ecb45b84f8bf664ff520
+guid: 8cab4eb1c5ade5745854fb1e47129a7e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -44,11 +44,11 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 33, y: 114, z: 23, w: 92}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -104,22 +104,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PLAY_BUTTON_0
+      name: RESUME_BUTTON_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 94
-        width: 255
-        height: 92
+        x: 3
+        y: 88
+        width: 250
+        height: 91
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 13, y: 10, z: 21, w: 12}
+      border: {x: 18, y: 4, z: 17, w: 4}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a1544064c5b9e248a6d16d86098db81
-      internalID: -1991111010
+      spriteID: 1d1f97876b9d2144aa114edda25e4c28
+      internalID: 1901558635
       vertices: []
       indices: 
       edges: []
@@ -127,15 +127,15 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: a9f9787e895f6fc4aae7fac522796337
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PLAY_BUTTON_0: -1991111010
+      RESUME_BUTTON_0: 1901558635
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

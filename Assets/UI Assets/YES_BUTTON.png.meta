@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b9037e1d5a208a74085eb9d2c804d5af
+guid: 65a95b6bf90099d4ab7fca50f431dca2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,22 +104,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: QUIT_BUTTON_0
+      name: YES_BUTTON_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 94
-        width: 255
-        height: 93
+        x: 3
+        y: 88
+        width: 250
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 9, y: 9, z: 8, w: 11}
+      border: {x: 31, y: 17, z: 30, w: 16}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9dac108ba197fb04e9ee6118cb965f3a
-      internalID: -1556362603
+      spriteID: ec45b5838a3e79e429a0f38da7b198d6
+      internalID: 1752156606
       vertices: []
       indices: 
       edges: []
@@ -127,7 +127,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 1d42216b055e5c741a7e66055abb91ff
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      QUIT_BUTTON_0: -1556362603
+      YES_BUTTON_0: 1752156606
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
