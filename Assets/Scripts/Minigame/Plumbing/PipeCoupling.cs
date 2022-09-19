@@ -16,7 +16,7 @@ public class PipeCoupling : Plumbing
     // Update is called once per frame
     void Update()
     {
-        if (!Input.GetMouseButton(0) || PipeGameManager.Instance.isGameOver)
+        if (!Input.GetMouseButton(0) || PipeGameManager.Instance.isGameOver || PipeGameManager.Instance.isGamePause)
         {
             return;
         }

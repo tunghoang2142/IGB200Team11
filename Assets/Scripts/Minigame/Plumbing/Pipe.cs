@@ -8,7 +8,7 @@ public class Pipe : Plumbing
     //public float Length { get { return GetLength(); } }
 
     public float minTurningDistance = 1f;
-    bool isDragging = false;
+    public bool isDragging = false;
 
     // Start is called before the first frame update
     void Start()

@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
 
     private int layerMask;
     NavMeshAgent agent;
-    public GameObject cube;
 
     // TODO: Put this to UI Manager
     public GameObject jobPanel;
@@ -41,7 +40,6 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {
             agent.SetDestination(hit.point);
-            cube.transform.position = hit.point;
         }
     }
 
