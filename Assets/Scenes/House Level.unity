@@ -6488,7 +6488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c637d1647f03d4a9695d16a03aee0564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneName: Plumbing
+  SceneName: PlumbingLvL2
 --- !u!65 &609222030
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9439,7 +9439,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMoveable: 1
-  cube: {fileID: 57976074}
   jobPanel: {fileID: 2130783482}
   currentJob: 
 --- !u!222 &857219586
@@ -12825,7 +12824,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Plumbing
+  m_text: 'Plumbing
+
+
+    Connect pipe to the end by dragging it to the end
+
+
+    Wiring
+
+
+    Click
+    wires to rotate them'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -13253,7 +13262,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1106417363
 RectTransform:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WiringGameManager : MonoBehaviour
 {
@@ -80,6 +81,7 @@ public class WiringGameManager : MonoBehaviour
         isGameOver = true;
         Time.timeScale = 0;
         //UIManager.End();
+        SceneManager.LoadScene("Win screen W");
     }
 
     void TurnTile(GameObject tile)
