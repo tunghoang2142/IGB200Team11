@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class PipeUIManager : MonoBehaviour
 {
-    public GameObject PausePanel;
+    public GameObject pausePanel;
+    public GameObject winPanel;
+    public GameObject gameoverPanel;
 
     public TMP_Text timer;
     // Start is called before the first frame update
@@ -26,25 +28,30 @@ public class PipeUIManager : MonoBehaviour
         if (PipeGameManager.Instance.isGamePause)
         {
             // Do something
-            PausePanel.SetActive(true);
+            pausePanel.SetActive(true);
         }
         else
         {
             // Do something
-            PausePanel.SetActive(false);
+            pausePanel.SetActive(false);
         }
     }
 
-    public void End()
+    public void Win()
     {
         // Do something
-        SceneManager.LoadScene("Win screen");
+        winPanel.SetActive(true);
     }
 
-    public void GameOver()
+    public void GameOver(string cause = "")
     {
         // Do something
-        SceneManager.LoadScene("Game over");
+        gameoverPanel.SetActive(true);
+
+        if (cause != "")
+        {
+            gameoverPanel.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = cause;
+        }
     }
     
     // will be replaced with a timer bar
