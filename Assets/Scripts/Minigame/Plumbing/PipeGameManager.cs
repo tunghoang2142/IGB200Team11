@@ -5,8 +5,6 @@ using UnityEngine;
 public class PipeGameManager : MonoBehaviour
 {
     public PipeUIManager UIManager;
-    public static string PipePrefabName = "Pipe";
-    public static string CornerPrefabName = "Coupling";
     public bool isGamePause = false;
     public bool isGameOver = false;
     public float timer = 30f;
@@ -34,14 +32,12 @@ public class PipeGameManager : MonoBehaviour
         {
             UIManager = this.gameObject.GetComponent<PipeUIManager>();
         }
-
-        Time.timeScale = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isGamePause || isGameOver)
+        if(isGameOver || isGameOver)
         {
             return;
         }
@@ -50,7 +46,7 @@ public class PipeGameManager : MonoBehaviour
         UIManager.DisplayTimer(timer);
         if(timer < 0)
         {
-            GameOver("Time over!");
+            GameOver();
         }
     }
 
@@ -69,19 +65,19 @@ public class PipeGameManager : MonoBehaviour
         UIManager.Pause();
     }
 
-    public void GameOver(string cause = "")
+    public void GameOver()
     {
         isGameOver = true;
         Time.timeScale = 0;
-        UIManager.GameOver(cause);
+        UIManager.GameOver();
         print("Game Over!");
     }
 
-    public void Win()
+    public void End()
     {
         print("Game end.");
         isGameOver = true;
         Time.timeScale = 0;
-        UIManager.Win();
+        UIManager.End();
     }
 }

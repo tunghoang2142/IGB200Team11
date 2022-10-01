@@ -7,9 +7,6 @@ public abstract class Plumbing : MonoBehaviour
     public GameObject start;
     public GameObject end;
     public float connectDeviance = 0.3f; // How far between connection point can 2 pipes be connected when come into contact
-    public float expansionSpeed = 3f; // How fast pipe can be expanded
-    public float collisionTimer = 0.1f; // How long collision stay before trigger collision event
-    public bool isDragging = false;
 
     public float Diameter { get { return GetDiameter(); } }
     public float Length { get { return GetLength(); } }
@@ -43,21 +40,17 @@ public abstract class Plumbing : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     //private void OnCollisionEnter(Collision collision)
     {
-        //print(collision.body.name + ": " + collision.contacts[0].point);
-
+        print(collision.contacts[0].point);
+        
         switch (collision.body.tag)
         {
             case "Pipe":
-                if (collisionTimer > 0)
-                {
-                    collisionTimer -= Time.deltaTime;
-                    return;
-                }
-                PipeGameManager.Instance.GameOver("Pipe hit another pipe!");
-                return;
-            default:
+                print("Pipe hit another pipe!");
                 break;
+            default:
+                return;
         }
+        PipeGameManager.Instance.GameOver();
     }
 
     void OnTriggerEnter(Collider other)
@@ -67,20 +60,19 @@ public abstract class Plumbing : MonoBehaviour
         {
             case "Wall":
                 print("Pipe hit wall!");
-                PipeGameManager.Instance.GameOver("Pipe hit wall!");
-                return;
+                break;
             case "Goal":
                 // Check allignment and deviance
                 float distance = (other.transform.position - end.transform.position).magnitude;
                 if (this.transform.forward == other.transform.forward && distance <= connectDeviance)
                 {
-                    PipeGameManager.Instance.Win();
+                    PipeGameManager.Instance.End();
                     return;
                 }
                 break;
             default:
-                break;
+                return;
         }
-
+        PipeGameManager.Instance.GameOver();
     }
 }
