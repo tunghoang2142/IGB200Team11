@@ -21,18 +21,6 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get { return _instance; } }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public static void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
@@ -53,6 +41,12 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(1, LoadSceneMode.Single);
+    }
+
+    public static void Replay()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
     }
 
     public static void Quit()
