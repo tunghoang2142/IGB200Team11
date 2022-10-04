@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Pipe : Plumbing
 {
+    //public float Diameter { get { return GetDiameter(); } }
+    //public float Length { get { return GetLength(); } }
+
     public float minTurningDistance = 1f;
+    public bool isDragging = false;
 
     // Start is called before the first frame update
     void Start()
@@ -15,11 +19,13 @@ public class Pipe : Plumbing
     // Update is called once per frame
     void Update()
     {
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //Debug.DrawLine(this.transform.position, ray.GetPoint(Camera.main.transform.position.y - end.transform.position.y), Color.red);
+
         if (PipeGameManager.Instance.isGameOver || PipeGameManager.Instance.isGamePause)
         {
             return;
         }
-
         Drag();
     }
 
@@ -44,17 +50,17 @@ public class Pipe : Plumbing
             // Turning the pipe
             if (height > Diameter && height > minTurningDistance)
             {
-                GameObject corner = Resources.Load<GameObject>(LocalPath.prefabs + PipeGameManager.CornerPrefabName);
-                corner = Instantiate(corner, end.transform.position, end.transform.rotation);
-                PipeCorner script = corner.GetComponent<PipeCorner>();
-                script.isDragging = true;
-                StrechPipe(-script.Length / 2);
+                GameObject coupling = Resources.Load<GameObject>(LocalPath.prefabs + "Coupling");
+                coupling = Instantiate(coupling);
+                coupling.transform.rotation = end.transform.rotation;
+                coupling.transform.position = end.transform.position;
+                StrechPipe(-coupling.GetComponent<PipeCoupling>().Length / 2);
 
-                // Rotate the corner depend on the direction of the mouse
+                // Rotate the coupling depend on the direction of the mouse
                 float turningAngle = Vector3.Angle(end.transform.right, dragDirection);
                 if (turningAngle > 90)
                 {
-                    corner.GetComponent<PipeCorner>().Flip();
+                    coupling.GetComponent<PipeCoupling>().Flip();
                 }
 
                 Destroy(this);
@@ -63,24 +69,18 @@ public class Pipe : Plumbing
 
             float angle = Vector3.Angle(end.transform.forward, dragDirection);
 
-            // Do nothing if mouse is behind object
+            // Do nothing if mouse pos is behind object
             if (angle > 90f)
             {
                 return;
             }
 
             float length = new Vector3(dragDirection.x * end.transform.forward.x, dragDirection.y * end.transform.forward.y, dragDirection.z * end.transform.forward.z).magnitude;
-            float expansionLimit = expansionSpeed * Time.deltaTime;
-
-            if (length > expansionLimit)
-            {
-                length = expansionLimit;
-            }
-
             StrechPipe(length);
 
             return;
         }
+
 
         RaycastHit hit;
 
@@ -107,4 +107,30 @@ public class Pipe : Plumbing
         // Translate object to new pos after scaling
         this.transform.position += end.transform.forward * length / 2;
     }
+
+    //float GetLength()
+    //{
+    //    // Matrix respresent this transform
+    //    Matrix4x4 transform = this.transform.localToWorldMatrix;
+    //    // Rotate back to 0 degree
+    //    Matrix4x4 rotation = Matrix4x4.Rotate(this.transform.rotation).inverse;
+    //    // Scale it with forward vector
+    //    Matrix4x4 scale = Matrix4x4.Scale(this.transform.forward);
+    //    transform = transform * rotation * scale;
+    //    // Return the right scale of this transform
+    //    return transform.lossyScale.magnitude;
+    //}
+
+    //float GetDiameter()
+    //{
+    //    // Matrix respresent this transform
+    //    Matrix4x4 transform = this.transform.localToWorldMatrix;
+    //    // Rotate back to 0 degree
+    //    Matrix4x4 rotation = Matrix4x4.Rotate(this.transform.rotation).inverse;
+    //    // Scale it with right vector
+    //    Matrix4x4 scale = Matrix4x4.Scale(this.transform.right);
+    //    transform = transform * rotation * scale;
+    //    // Return the right scale of this transform
+    //    return transform.lossyScale.magnitude;
+    //}
 }
