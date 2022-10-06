@@ -4,9 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class PipeUIManager : MonoBehaviour
+public class PipeUIManager : UIManager
 {
-    public GameObject pausePanel;
     public GameObject winPanel;
     public GameObject gameoverPanel;
 
@@ -23,23 +22,8 @@ public class PipeUIManager : MonoBehaviour
 
     }
 
-    public void Pause()
+    public override void Win()
     {
-        if (PipeGameManager.Instance.isGamePause)
-        {
-            // Do something
-            pausePanel.SetActive(true);
-        }
-        else
-        {
-            // Do something
-            pausePanel.SetActive(false);
-        }
-    }
-
-    public void Win()
-    {
-        // Do something
         winPanel.SetActive(true);
     }
 
