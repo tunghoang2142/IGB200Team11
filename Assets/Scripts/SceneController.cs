@@ -29,7 +29,7 @@ public class SceneController : MonoBehaviour
         if (trigger)
         {
             HouseManager.Instance.SetBrokenMaterials(trigger.brokenObjects);
-            LoadScene(trigger.SceneName);
+            LoadScene(trigger.ScenesName[Random.Range(0, trigger.ScenesName.Length)]);
         }
         else
         {

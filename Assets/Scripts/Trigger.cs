@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class Trigger : MonoBehaviour
 {
-    public string SceneName = "";
+    public string[] ScenesName;
     public GameObject[] brokenObjects;
 }

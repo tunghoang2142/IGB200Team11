@@ -8994,7 +8994,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c637d1647f03d4a9695d16a03aee0564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneName: PlumbingLvL2
+  ScenesName:
+  - PlumbingLvL2
+  - PlumbingLvL3
   brokenObjects:
   - {fileID: 2660096906054114485}
 --- !u!65 &609222030
@@ -12557,7 +12559,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c637d1647f03d4a9695d16a03aee0564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneName: Wiring
+  ScenesName:
+  - Wiring LvL 2
+  - Wiring LvL 3
   brokenObjects: []
 --- !u!65 &837881154
 BoxCollider:

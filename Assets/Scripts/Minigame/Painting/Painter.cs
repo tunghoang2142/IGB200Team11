@@ -9,11 +9,14 @@ public class Painter : MonoBehaviour
     public Terrain terrain; // Only work on normalize rotation
     public int brushWidth = 50;
     public int brushHeight = 100;
+    public float paintAmount = 25f;
 
     Texture2D oldTexture;
     float[] layersWeight;
     float widthScale;
     float heightScale;
+
+    readonly int painLayer = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +35,6 @@ public class Painter : MonoBehaviour
             }
         }
 
-        Cursor.visible = false;
-
         if (!brush)
         {
             brush = this.gameObject;
@@ -47,10 +48,14 @@ public class Painter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdatePos();
-        GlowPaintedArea(1);
+        if(PaintingGameManager.Instance.isGamePause || PaintingGameManager.Instance.isGameOver)
+        {
+            return;
+        }
 
-        print("Percentage: " + GetPercentage(1) * 100);
+        UpdatePos();
+        GlowPaintedArea(painLayer);
+        //print("Percentage: " + GetPercentage(painLayer) * 100);
 
         if (Input.GetMouseButton(0))
         {
@@ -85,6 +90,7 @@ public class Painter : MonoBehaviour
             }
 
             PaintMap((int)mapPoint.x, (int)mapPoint.y, (int)brushSize.x, (int)brushSize.y);
+            paintAmount -= Time.deltaTime;
         }
     }
 
@@ -122,7 +128,7 @@ public class Painter : MonoBehaviour
         {
             for (int mapHeight = 0; mapHeight < height; mapHeight++)
             {
-                //TODO: Check number of layers and select layer for paint
+                //TODO: Check number of layers and select layer for painting
                 layersWeight[0] -= splatmap[mapHeight, mapWidth, 0];
                 splatmap[mapHeight, mapWidth, 0] = 0;
                 layersWeight[1] += 1 - splatmap[mapHeight, mapWidth, 1];
@@ -131,6 +137,11 @@ public class Painter : MonoBehaviour
         }
 
         terrain.terrainData.SetAlphamaps(x, y, splatmap);
+    }
+
+    public float GetPercentage()
+    {
+        return GetPercentage(painLayer) * 100;
     }
 
     float GetPercentage(int layer)
