@@ -11,6 +11,7 @@ public class HouseManager : MonoBehaviour
     public Renderer[] environmentAssets;
     public static Material[] assetStates;
     static HouseManager _instance;
+    static Material[] brokenMaterials;
 
     private void Awake()
     {
@@ -44,24 +45,36 @@ public class HouseManager : MonoBehaviour
         {
             if (assetStates[i] != environmentAssets[i])
             {
-                environmentAssets[i].GetComponent<Renderer>().material = assetStates[i] ;
+                environmentAssets[i].GetComponent<Renderer>().material = assetStates[i];
             }
         }
     }
 
-    public static void Repair(Material brokenMaterial)
+    public void SetBrokenMaterials(GameObject[] brokenObjects)
     {
-        print(brokenMaterial.name);
-        for (int i = 0; i < assetStates.Length; i++)
+        brokenMaterials = new Material[brokenObjects.Length];
+        for (int i = 0; i < brokenObjects.Length; i++)
         {
-            if (assetStates[i] == brokenMaterial)
+            brokenMaterials[i] = brokenObjects[i].GetComponent<Renderer>().material;
+        }
+    }
+
+    public static void Repair()
+    {
+        foreach (Material brokenMaterial in brokenMaterials)
+        {
+            //print(brokenMaterial.name);
+            for (int i = 0; i < assetStates.Length; i++)
             {
-                string materialName = brokenMaterial.name;
-                materialName = materialName.Substring(0, materialName.Length - repaired.Length);
-                materialName += broken;
-                print(materialName);
-                assetStates[i] = Resources.Load<Material>(LocalPath.repairedEnvironmentAssets + materialName);
-                return;
+                if (assetStates[i] == brokenMaterial)
+                {
+                    string materialName = brokenMaterial.name;
+                    materialName = materialName.Substring(0, materialName.Length - repaired.Length);
+                    materialName += broken;
+                    //print(materialName);
+                    assetStates[i] = Resources.Load<Material>(LocalPath.repairedEnvironmentAssets + materialName);
+                    break;
+                }
             }
         }
     }

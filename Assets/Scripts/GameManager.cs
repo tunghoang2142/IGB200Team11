@@ -1,89 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public abstract class GameManager : MonoBehaviour
 {
-    public static GameObject currentTrigger;
-    static GameManager _instance;
-    static Material[] brokenMaterials;
-    public bool isGamePause;
+    public UIManager UIManager;
+    public bool isGamePause = false;
+    public bool isGameOver = false;
 
-    private void Awake()
+    // Start is called before the first frame update
+    public virtual void Start()
     {
-        if (_instance != null && _instance != this)
+        if (!UIManager)
         {
-            Destroy(this.gameObject);
+            UIManager = this.gameObject.GetComponent<UIManager>();
+        }
+
+        Time.timeScale = 1;
+    }
+
+    public virtual void Pause()
+    {
+        isGamePause = !isGamePause;
+        if (isGamePause)
+        {
+            Time.timeScale = 0;
         }
         else
         {
-            _instance = this;
+            Time.timeScale = 1;
         }
+
+        UIManager.Pause();
     }
 
-    public static GameManager Instance { get { return _instance; } }
-
-    public static void PlayMinigame()
+    public virtual void GameOver()
     {
-        Trigger trigger = currentTrigger.GetComponent<Trigger>();
-        if (trigger)
-        {
-            brokenMaterials = new Material[trigger.brokenObjects.Length];
-            for(int i = 0; i < trigger.brokenObjects.Length; i++)
-            {
-                brokenMaterials[i] = trigger.brokenObjects[i].GetComponent<Renderer>().material;
-            }
-            LoadScene(trigger.SceneName);
-        }
-        else
-        {
-            Debug.LogError("GameManager - PlayeMinigame: Trigger not found!");
-        }
+        isGameOver = true;
+        Time.timeScale = 0;
+        UIManager.GameOver();
     }
 
-    public void Win()
+    public virtual void GameOver(string cause = "")
     {
-        print("A");
-        foreach (Material material in brokenMaterials)
-        {
-            print("B");
-            HouseManager.Repair(material);
-            print("C");
-        }
-        LoadScene(LocalPath.houseLevel);
+        isGameOver = true;
+        Time.timeScale = 0;
+        UIManager.GameOver(cause);
     }
 
-    public static void LoadScene(string sceneName)
+    public virtual void Win()
     {
-        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
-    }
-
-    public static void LoadScene(int sceneNumber)
-    {
-        SceneManager.LoadScene(sceneNumber, LoadSceneMode.Single);
-    }
-
-    public static void Menu()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(0, LoadSceneMode.Single);
-    }
-
-    public static void StartGame()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(1, LoadSceneMode.Single);
-    }
-
-    public static void Replay()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
-    }
-
-    public static void Quit()
-    {
-        Application.Quit();
+        isGameOver = true;
+        Time.timeScale = 0;
+        UIManager.Win();
     }
 }

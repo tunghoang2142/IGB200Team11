@@ -44,9 +44,9 @@ public class Pipe : Plumbing
             // Turning the pipe
             if (height > Diameter && height > minTurningDistance)
             {
-                GameObject corner = Resources.Load<GameObject>(LocalPath.prefabs + PipeGameManager.CornerPrefabName);
+                GameObject corner = Resources.Load<GameObject>(LocalPath.prefabs + PipeGameManager.ElbowPrefabName);
                 corner = Instantiate(corner, end.transform.position, end.transform.rotation);
-                PipeCorner script = corner.GetComponent<PipeCorner>();
+                PipeElbow script = corner.GetComponent<PipeElbow>();
                 script.isDragging = true;
                 StrechPipe(-script.Length / 2);
 
@@ -54,7 +54,7 @@ public class Pipe : Plumbing
                 float turningAngle = Vector3.Angle(end.transform.right, dragDirection);
                 if (turningAngle > 90)
                 {
-                    corner.GetComponent<PipeCorner>().Flip();
+                    corner.GetComponent<PipeElbow>().Flip();
                 }
 
                 Destroy(this);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PipeCorner : Plumbing
+public class PipeElbow : Plumbing
 {
     public float minPipeLength = 0.5f;
     float bufferLength = 0.01f;

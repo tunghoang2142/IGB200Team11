@@ -47,14 +47,14 @@ public class Player : MonoBehaviour
         {
             isMoveable = false;
             agent.SetDestination(other.gameObject.transform.position);
-            GameManager.currentTrigger = other.gameObject;
+            SceneController.currentTrigger = other.gameObject;
             jobPanel.SetActive(true);
         }
     }
 
     public void AcceptJob()
     {
-        GameManager.PlayMinigame();
+        SceneController.PlayMinigame();
     }
 
     public void DeclineJob()

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4180620482753838104}
   - component: {fileID: -6034862265131930444}
   m_Layer: 0
-  m_Name: Coupling
+  m_Name: PipeElbow
   m_TagString: Pipe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

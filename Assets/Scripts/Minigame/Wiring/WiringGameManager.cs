@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class WiringGameManager : MonoBehaviour
+public class WiringGameManager : GameManager
 {
     public Wire goal1;
     public Wire goal2;
 
-    public bool isGamePause = false;
-    public bool isGameOver = false;
     public float timer = 30f;
 
     private int layerMask;
 
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
+        base.Start();
         layerMask = LayerMask.GetMask("Ground");
     }
 
@@ -30,7 +29,7 @@ public class WiringGameManager : MonoBehaviour
 
         if (goal1.isPowered && goal2.isPowered)
         {
-            End();
+            Win();
             return;
         }
 
@@ -38,7 +37,7 @@ public class WiringGameManager : MonoBehaviour
         //UIManager.DisplayTimer(timer);
         if (timer < 0)
         {
-            //GameOver();
+            GameOver("Time over!");
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -52,37 +51,15 @@ public class WiringGameManager : MonoBehaviour
         }
     }
 
-    public void Pause()
-    {
-        isGamePause = !isGamePause;
-        if (isGamePause)
-        {
-            Time.timeScale = 0;
-        }
-        else
-        {
-            Time.timeScale = 1;
-        }
 
-        //UIManager.Pause();
-    }
-
-    public void GameOver()
-    {
-        isGameOver = true;
-        Time.timeScale = 0;
-        //UIManager.GameOver();
-        print("Game Over!");
-    }
-
-    public void End()
-    {
-        print("Game end.");
-        isGameOver = true;
-        Time.timeScale = 0;
-        //UIManager.End();
-        SceneManager.LoadScene("Win screen W");
-    }
+    //public void End()
+    //{
+    //    print("Game end.");
+    //    isGameOver = true;
+    //    Time.timeScale = 0;
+    //    //UIManager.End();
+    //    SceneController.LoadScene("Win screen W");
+    //}
 
     void TurnTile(GameObject tile)
     {

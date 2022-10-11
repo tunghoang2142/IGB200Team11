@@ -3,10 +3,12 @@ using UnityEngine;
 public abstract class UIManager : MonoBehaviour
 {
     public GameObject pausePanel;
+    public GameObject winPanel;
+    public GameObject gameoverPanel;
 
-    public void Pause()
+    public virtual void Pause()
     {
-        if (GameManager.Instance.isGamePause)
+        if (SceneController.Instance.isGamePause)
         {
             pausePanel.SetActive(true);
         }
@@ -16,5 +18,23 @@ public abstract class UIManager : MonoBehaviour
         }
     }
 
-    public abstract void Win();
+    public virtual void Win()
+    {
+        winPanel.SetActive(true);
+    }
+
+    public virtual void GameOver(string cause)
+    {
+        gameoverPanel.SetActive(true);
+
+        if (cause != "")
+        {
+            gameoverPanel.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = cause;
+        }
+    }
+
+    public virtual void GameOver()
+    {
+        gameoverPanel.SetActive(true);
+    }
 }
