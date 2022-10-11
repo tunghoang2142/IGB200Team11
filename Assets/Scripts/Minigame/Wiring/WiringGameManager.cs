@@ -34,7 +34,7 @@ public class WiringGameManager : GameManager
         }
 
         timer -= Time.deltaTime;
-        //UIManager.DisplayTimer(timer);
+        ((WiringUIManager) UIManager).DisplayTimer(timer);
         if (timer < 0)
         {
             GameOver("Time over!");
@@ -50,16 +50,6 @@ public class WiringGameManager : GameManager
             }
         }
     }
-
-
-    //public void End()
-    //{
-    //    print("Game end.");
-    //    isGameOver = true;
-    //    Time.timeScale = 0;
-    //    //UIManager.End();
-    //    SceneController.LoadScene("Win screen W");
-    //}
 
     void TurnTile(GameObject tile)
     {
