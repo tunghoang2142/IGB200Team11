@@ -12,9 +12,6 @@ public class Player : MonoBehaviour
 
     // TODO: Put this to UI Manager
     public GameObject jobPanel;
-    // TODO: Put this to Game Manager
-    public string currentJob;
-    
 
     // Start is called before the first frame update
     void Start()
@@ -49,15 +46,15 @@ public class Player : MonoBehaviour
         if (trigger)
         {
             isMoveable = false;
-            currentJob = trigger.SceneName;
+            agent.SetDestination(other.gameObject.transform.position);
+            GameManager.currentTrigger = other.gameObject;
             jobPanel.SetActive(true);
         }
     }
 
     public void AcceptJob()
     {
-        // TODO: Put this to Game Manager
-        GameManager.LoadScene(currentJob);
+        GameManager.PlayMinigame();
     }
 
     public void DeclineJob()

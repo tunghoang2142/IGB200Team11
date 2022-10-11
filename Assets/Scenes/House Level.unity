@@ -4949,6 +4949,7 @@ GameObject:
   - component: {fileID: 355584088}
   - component: {fileID: 355584087}
   - component: {fileID: 355584089}
+  - component: {fileID: 355584090}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -4998,6 +4999,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 0}
   defaultBGM: {fileID: 0}
+--- !u!114 &355584090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355584086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dea2861bca7d403d86240a0a6f2122d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  environmentAssets:
+  - {fileID: 5756438635957939214}
+  - {fileID: 7564978731876004164}
 --- !u!1 &404062720
 GameObject:
   m_ObjectHideFlags: 0
@@ -7057,7 +7073,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh26514
+  m_Name: pb_Mesh44696
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8815,6 +8831,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: PlumbingLvL2
+  brokenObjects:
+  - {fileID: 2660096906054114485}
 --- !u!65 &609222030
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12376,6 +12394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: Wiring
+  brokenObjects: []
 --- !u!65 &837881154
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13135,7 +13154,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMoveable: 1
   jobPanel: {fileID: 2130783482}
-  currentJob: 
 --- !u!222 &857219586
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28918,7 +28936,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh26344
+  m_Name: pb_Mesh44526
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -31851,6 +31869,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d256d02de491f6468597a7e829fecbb, type: 3}
+--- !u!1 &2660096906054114485 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4201173608939736984, guid: 4d256d02de491f6468597a7e829fecbb, type: 3}
+  m_PrefabInstance: {fileID: 2660096906054114484}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2808698515593673349 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5272591771956865231, guid: b1d72b9f39f91ae44bbdb8af897a13f6, type: 3}
@@ -32409,6 +32432,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2375063559227276296, guid: aefd02377e5736c42a2d90069462483a, type: 3}
   m_PrefabInstance: {fileID: 8004886421773750276}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &5756438635957939214 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3614391169401182070, guid: aefd02377e5736c42a2d90069462483a, type: 3}
+  m_PrefabInstance: {fileID: 8004886421773750276}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5777183911531577954
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32906,6 +32934,11 @@ PrefabInstance:
 --- !u!4 &7564978731876004162 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5482750026061065718, guid: 4d256d02de491f6468597a7e829fecbb, type: 3}
+  m_PrefabInstance: {fileID: 2660096906054114484}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7564978731876004164 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4469630496995111488, guid: 4d256d02de491f6468597a7e829fecbb, type: 3}
   m_PrefabInstance: {fileID: 2660096906054114484}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7689090094969798209

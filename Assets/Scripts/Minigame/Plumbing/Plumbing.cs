@@ -77,6 +77,10 @@ public abstract class Plumbing : MonoBehaviour
                     PipeGameManager.Instance.Win();
                     return;
                 }
+                else
+                {
+                    PipeGameManager.Instance.GameOver("Pipes are too far apart!");
+                }
                 break;
             default:
                 break;

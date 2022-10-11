@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameObject currentTrigger;
     static GameManager _instance;
+    static Material[] brokenMaterials;
     public bool isGamePause;
 
     private void Awake()
@@ -21,6 +23,36 @@ public class GameManager : MonoBehaviour
     }
 
     public static GameManager Instance { get { return _instance; } }
+
+    public static void PlayMinigame()
+    {
+        Trigger trigger = currentTrigger.GetComponent<Trigger>();
+        if (trigger)
+        {
+            brokenMaterials = new Material[trigger.brokenObjects.Length];
+            for(int i = 0; i < trigger.brokenObjects.Length; i++)
+            {
+                brokenMaterials[i] = trigger.brokenObjects[i].GetComponent<Renderer>().material;
+            }
+            LoadScene(trigger.SceneName);
+        }
+        else
+        {
+            Debug.LogError("GameManager - PlayeMinigame: Trigger not found!");
+        }
+    }
+
+    public void Win()
+    {
+        print("A");
+        foreach (Material material in brokenMaterials)
+        {
+            print("B");
+            HouseManager.Repair(material);
+            print("C");
+        }
+        LoadScene(LocalPath.houseLevel);
+    }
 
     public static void LoadScene(string sceneName)
     {
