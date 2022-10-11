@@ -6,7 +6,7 @@ public abstract class UIManager : MonoBehaviour
 
     public void Pause()
     {
-        if (PipeGameManager.Instance.isGamePause)
+        if (GameManager.Instance.isGamePause)
         {
             pausePanel.SetActive(true);
         }
