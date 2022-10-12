@@ -28,7 +28,7 @@ public class SceneController : MonoBehaviour
         Trigger trigger = currentTrigger.GetComponent<Trigger>();
         if (trigger)
         {
-            HouseManager.Instance.SetBrokenMaterials(trigger.brokenObjects);
+            HouseManager.Instance.SetBrokenMaterials(trigger);
             LoadScene(trigger.ScenesName[Random.Range(0, trigger.ScenesName.Length)]);
         }
         else

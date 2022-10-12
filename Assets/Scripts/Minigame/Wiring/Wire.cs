@@ -23,11 +23,19 @@ public class Wire : MonoBehaviour
 
         if (isPowered)
         {
-            GetComponent<Renderer>().material = onMaterial;
+            //GetComponent<Renderer>().material = onMaterial;
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            {
+                renderer.material = onMaterial;
+            }
         }
         else
         {
-            GetComponent<Renderer>().material = offMaterial;
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            {
+                renderer.material = offMaterial;
+            }
+            //GetComponentsInChildren<Renderer>().material = offMaterial;
         }
     }
 
@@ -65,7 +73,11 @@ public class Wire : MonoBehaviour
     public void PowerOn()
     {
         isPowered = true;
-        GetComponent<Renderer>().material = onMaterial;
+
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+        {
+            renderer.material = onMaterial;
+        }
 
         if (child)
         {
@@ -89,7 +101,10 @@ public class Wire : MonoBehaviour
     public void PowerOff()
     {
         isPowered = false;
-        GetComponent<Renderer>().material = offMaterial;
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+        {
+            renderer.material = offMaterial;
+        }
 
         if (child)
         {

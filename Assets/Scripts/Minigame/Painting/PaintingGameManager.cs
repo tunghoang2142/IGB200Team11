@@ -6,6 +6,7 @@ public class PaintingGameManager : GameManager
 {
     public Painter painter;
     static PaintingGameManager _instance;
+    float[,,] splatmap;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class PaintingGameManager : GameManager
 
     public override void Start()
     {
+        splatmap = painter.terrain.terrainData.GetAlphamaps(0, 0, painter.terrain.terrainData.alphamapWidth, painter.terrain.terrainData.alphamapHeight);
         base.Start();
         Cursor.visible = false;
     }
@@ -53,5 +55,10 @@ public class PaintingGameManager : GameManager
     {
         base.Win();
         Cursor.visible = true;
+    }
+
+    public void ResetMap()
+    {
+        painter.terrain.terrainData.SetAlphamaps(0, 0, splatmap);
     }
 }

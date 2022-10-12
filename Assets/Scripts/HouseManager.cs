@@ -7,11 +7,13 @@ public class HouseManager : MonoBehaviour
 {
     readonly static string broken = "damaged";
     readonly static string repaired = "repaired";
-
-    public Renderer[] environmentAssets;
-    public static Material[] assetStates;
     static HouseManager _instance;
-    static Material[] brokenMaterials;
+
+    List<GameObject> environmentAssets;
+    static Material[] assetStates;
+
+    // TODO: Make both repaired and broken material name systematic will simplify the code
+    static Dictionary<Material, Material> brokenMaterials;
 
     private void Awake()
     {
@@ -27,54 +29,100 @@ public class HouseManager : MonoBehaviour
 
     public static HouseManager Instance { get { return _instance; } }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        if (assetStates == null)
+        if (environmentAssets == null)
         {
-            assetStates = new Material[environmentAssets.Length];
-
-            for (int i = 0; i < environmentAssets.Length; i++)
+            environmentAssets = new List<GameObject>();
+            foreach (Trigger trigger in GameObject.FindObjectsOfType<Trigger>())
             {
-                assetStates[i] = environmentAssets[i].GetComponent<Renderer>().material;
+                foreach (GameObject brokenObject in trigger.brokenObjects)
+                {
+                    environmentAssets.Add(brokenObject);
+                }
             }
-            return;
         }
 
-        for (int i = 0; i < environmentAssets.Length; i++)
+        if (assetStates == null)
         {
-            if (assetStates[i] != environmentAssets[i])
+            assetStates = new Material[environmentAssets.Count];
+            for (int i = 0; i < environmentAssets.Count; i++)
             {
-                environmentAssets[i].GetComponent<Renderer>().material = assetStates[i];
+                print(i);
+                assetStates[i] = environmentAssets[i].GetComponent<Renderer>().material;
             }
+        }
+
+        foreach (Material material in assetStates)
+        {
+            print(material.name);
+        }
+
+        // Update state
+        for (int i = 0; i < environmentAssets.Count; i++)
+        {
+            Renderer renderer = environmentAssets[i].GetComponent<Renderer>();
+            if (assetStates[i] != renderer.material)
+            {
+                renderer.material = assetStates[i];
+            }
+        }
+    }
+
+    public void SetBrokenMaterials(Trigger trigger)
+    {
+        GameObject[] brokenObjects = trigger.brokenObjects;
+        brokenMaterials = new Dictionary<Material, Material>();
+
+        for (int i = 0; i < brokenObjects.Length; i++)
+        {
+            Material key = brokenObjects[i].GetComponent<Renderer>().material;
+
+            string repairedPrefabName = brokenObjects[i].name;
+            print(repairedPrefabName);
+            print(repairedPrefabName.Length);
+            print(broken.Length);
+            repairedPrefabName = repairedPrefabName.Substring(0, repairedPrefabName.Length - broken.Length);
+
+            repairedPrefabName += repaired;
+            print(repairedPrefabName);
+            print(LocalPath.repairedEnvironmentAssets + repairedPrefabName);
+            Material value = Resources.Load<GameObject>(LocalPath.repairedEnvironmentAssets + repairedPrefabName).GetComponent<Renderer>().sharedMaterial;
+
+            brokenMaterials.Add(key, value);
         }
     }
 
     public void SetBrokenMaterials(GameObject[] brokenObjects)
     {
-        brokenMaterials = new Material[brokenObjects.Length];
+        brokenMaterials = new Dictionary<Material, Material>();
+
         for (int i = 0; i < brokenObjects.Length; i++)
         {
-            brokenMaterials[i] = brokenObjects[i].GetComponent<Renderer>().material;
+            Material key = brokenObjects[i].GetComponent<Renderer>().material;
+
+            string repairedPrefabName = brokenObjects[i].name;
+            print(repairedPrefabName);
+            print(repairedPrefabName.Length);
+            print(broken.Length);
+            repairedPrefabName = repairedPrefabName.Substring(0, repairedPrefabName.Length - broken.Length);
+
+            repairedPrefabName += repaired;
+            print(repairedPrefabName);
+            print(LocalPath.repairedEnvironmentAssets + repairedPrefabName);
+            Material value = Resources.Load<GameObject>(LocalPath.repairedEnvironmentAssets + repairedPrefabName).GetComponent<Renderer>().sharedMaterial;
+
+            brokenMaterials.Add(key, value);
         }
     }
 
     public static void Repair()
     {
-        foreach (Material brokenMaterial in brokenMaterials)
+        for (int i = 0; i < assetStates.Length; i++)
         {
-            //print(brokenMaterial.name);
-            for (int i = 0; i < assetStates.Length; i++)
+            if (brokenMaterials.ContainsKey(assetStates[i]))
             {
-                if (assetStates[i] == brokenMaterial)
-                {
-                    string materialName = brokenMaterial.name;
-                    materialName = materialName.Substring(0, materialName.Length - repaired.Length);
-                    materialName += broken;
-                    //print(materialName);
-                    assetStates[i] = Resources.Load<Material>(LocalPath.repairedEnvironmentAssets + materialName);
-                    break;
-                }
+                assetStates[i] = brokenMaterials[assetStates[i]];
             }
         }
     }
