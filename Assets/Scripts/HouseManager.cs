@@ -48,15 +48,15 @@ public class HouseManager : MonoBehaviour
             assetStates = new Material[environmentAssets.Count];
             for (int i = 0; i < environmentAssets.Count; i++)
             {
-                print(i);
+                //print(i);
                 assetStates[i] = environmentAssets[i].GetComponent<Renderer>().material;
             }
         }
 
-        foreach (Material material in assetStates)
-        {
-            print(material.name);
-        }
+        //foreach (Material material in assetStates)
+        //{
+        //    print(material.name);
+        //}
 
         // Update state
         for (int i = 0; i < environmentAssets.Count; i++)
@@ -79,14 +79,14 @@ public class HouseManager : MonoBehaviour
             Material key = brokenObjects[i].GetComponent<Renderer>().material;
 
             string repairedPrefabName = brokenObjects[i].name;
-            print(repairedPrefabName);
-            print(repairedPrefabName.Length);
-            print(broken.Length);
+            //print(repairedPrefabName);
+            //print(repairedPrefabName.Length);
+            //print(broken.Length);
             repairedPrefabName = repairedPrefabName.Substring(0, repairedPrefabName.Length - broken.Length);
 
             repairedPrefabName += repaired;
-            print(repairedPrefabName);
-            print(LocalPath.repairedEnvironmentAssets + repairedPrefabName);
+            //print(repairedPrefabName);
+            //print(LocalPath.repairedEnvironmentAssets + repairedPrefabName);
             Material value = Resources.Load<GameObject>(LocalPath.repairedEnvironmentAssets + repairedPrefabName).GetComponent<Renderer>().sharedMaterial;
 
             brokenMaterials.Add(key, value);
@@ -102,14 +102,13 @@ public class HouseManager : MonoBehaviour
             Material key = brokenObjects[i].GetComponent<Renderer>().material;
 
             string repairedPrefabName = brokenObjects[i].name;
-            print(repairedPrefabName);
-            print(repairedPrefabName.Length);
-            print(broken.Length);
+            //print(repairedPrefabName);
+            //print(repairedPrefabName.Length);
+            //print(broken.Length);
             repairedPrefabName = repairedPrefabName.Substring(0, repairedPrefabName.Length - broken.Length);
-
             repairedPrefabName += repaired;
-            print(repairedPrefabName);
-            print(LocalPath.repairedEnvironmentAssets + repairedPrefabName);
+            //print(repairedPrefabName);
+            //print(LocalPath.repairedEnvironmentAssets + repairedPrefabName);
             Material value = Resources.Load<GameObject>(LocalPath.repairedEnvironmentAssets + repairedPrefabName).GetComponent<Renderer>().sharedMaterial;
 
             brokenMaterials.Add(key, value);
