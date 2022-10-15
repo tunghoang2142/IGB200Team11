@@ -23,7 +23,6 @@ public class Wire : MonoBehaviour
 
         if (isPowered)
         {
-            //GetComponent<Renderer>().material = onMaterial;
             foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
             {
                 renderer.material = onMaterial;
@@ -35,43 +34,51 @@ public class Wire : MonoBehaviour
             {
                 renderer.material = offMaterial;
             }
-            //GetComponentsInChildren<Renderer>().material = offMaterial;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void ConnectWire(Wire wire)
     {
+        //print(gameObject.GetComponentInParent<Transform>().gameObject.name + ": " + "Connect ");
         if (!neighbours.Contains(wire))
         {
             neighbours.Add(wire);
-        }
 
-        if (isPowered && !wire.isPowered)
-        {
-            child = wire;
-            wire.PowerOn();
+            if (isPowered && !wire.isPowered)
+            {
+                if (child)
+                {
+                    child.PowerOff();
+                }
+                child = wire;
+                wire.PowerOn();
+            }
         }
     }
 
     public void DisconnectWire(Wire wire)
     {
-        neighbours.Remove(wire);
-
-        if (wire == child)
+        //print(gameObject.GetComponentInParent<Transform>().gameObject.name + ": " + "Disconnect ");
+        if (neighbours.Contains(wire))
         {
-            child = null;
-            wire.PowerOff();
+            neighbours.Remove(wire);
+
+            if (wire == child)
+            {
+                child = null;
+                wire.PowerOff();
+            }
+            else if (wire.child == this)
+            {
+                wire.child = null;
+                PowerOff();
+            }
         }
     }
 
     public void PowerOn()
     {
+        //print(gameObject.GetComponentInParent<Transform>().gameObject.name + ": " + "On");
         isPowered = true;
 
         foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
@@ -100,6 +107,7 @@ public class Wire : MonoBehaviour
 
     public void PowerOff()
     {
+        //print(gameObject.GetComponentInParent<Transform>().gameObject.name + ": " + "Off");
         isPowered = false;
         foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
         {
@@ -114,6 +122,7 @@ public class Wire : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //print(gameObject.GetComponentInParent<Transform>().gameObject.name + ": " + "Enter");
         if (collision.gameObject.tag == this.tag)
         {
             Wire wire = collision.gameObject.GetComponent<Wire>();
@@ -123,6 +132,7 @@ public class Wire : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
+        //print(GetComponentInParent<Transform>().gameObject.name + ": " + "Exist");
         if (collision.gameObject.tag == this.tag)
         {
             Wire wire = collision.gameObject.GetComponent<Wire>();
