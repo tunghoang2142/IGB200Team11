@@ -42,7 +42,7 @@ public class Painter : MonoBehaviour
 
         widthScale = terrain.terrainData.size.x / terrain.terrainData.alphamapWidth;
         heightScale = terrain.terrainData.size.z / terrain.terrainData.alphamapHeight;
-        transform.localScale = new Vector3(brushWidth * widthScale, 1, brushHeight * heightScale);
+        brush.transform.localScale = new Vector3(brushWidth * widthScale, 1, brushHeight * heightScale);
     }
 
     // Update is called once per frame
