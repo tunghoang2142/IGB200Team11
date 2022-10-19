@@ -48,25 +48,28 @@ public class HouseManager : MonoBehaviour
             assetStates = new Material[environmentAssets.Count];
             for (int i = 0; i < environmentAssets.Count; i++)
             {
-                //print(i);
-                assetStates[i] = environmentAssets[i].GetComponent<Renderer>().material;
+                assetStates[i] = environmentAssets[i].GetComponent<Renderer>().sharedMaterial;
+            }
+        }
+        else
+        {
+            // Update state
+            for (int i = 0; i < environmentAssets.Count; i++)
+            {
+                Renderer renderer = environmentAssets[i].GetComponent<Renderer>();
+                if (assetStates[i] != renderer.sharedMaterial)
+                {
+                    renderer.material = assetStates[i];
+                }
             }
         }
 
+        // TODO: Remove this
         //foreach (Material material in assetStates)
         //{
         //    print(material.name);
         //}
-
-        // Update state
-        for (int i = 0; i < environmentAssets.Count; i++)
-        {
-            Renderer renderer = environmentAssets[i].GetComponent<Renderer>();
-            if (assetStates[i] != renderer.material)
-            {
-                renderer.material = assetStates[i];
-            }
-        }
+        //
     }
 
     public void SetBrokenMaterials(Trigger trigger)
@@ -76,17 +79,12 @@ public class HouseManager : MonoBehaviour
 
         for (int i = 0; i < brokenObjects.Length; i++)
         {
-            Material key = brokenObjects[i].GetComponent<Renderer>().material;
+            Material key = brokenObjects[i].GetComponent<Renderer>().sharedMaterial;
 
             string repairedPrefabName = brokenObjects[i].name;
-            //print(repairedPrefabName);
-            //print(repairedPrefabName.Length);
-            //print(broken.Length);
-            repairedPrefabName = repairedPrefabName.Substring(0, repairedPrefabName.Length - broken.Length);
 
+            repairedPrefabName = repairedPrefabName.Substring(0, repairedPrefabName.Length - broken.Length);
             repairedPrefabName += repaired;
-            //print(repairedPrefabName);
-            //print(LocalPath.repairedEnvironmentAssets + repairedPrefabName);
             Material value = Resources.Load<GameObject>(LocalPath.repairedEnvironmentAssets + repairedPrefabName).GetComponent<Renderer>().sharedMaterial;
 
             brokenMaterials.Add(key, value);
@@ -99,16 +97,11 @@ public class HouseManager : MonoBehaviour
 
         for (int i = 0; i < brokenObjects.Length; i++)
         {
-            Material key = brokenObjects[i].GetComponent<Renderer>().material;
+            Material key = brokenObjects[i].GetComponent<Renderer>().sharedMaterial;
 
             string repairedPrefabName = brokenObjects[i].name;
-            //print(repairedPrefabName);
-            //print(repairedPrefabName.Length);
-            //print(broken.Length);
             repairedPrefabName = repairedPrefabName.Substring(0, repairedPrefabName.Length - broken.Length);
             repairedPrefabName += repaired;
-            //print(repairedPrefabName);
-            //print(LocalPath.repairedEnvironmentAssets + repairedPrefabName);
             Material value = Resources.Load<GameObject>(LocalPath.repairedEnvironmentAssets + repairedPrefabName).GetComponent<Renderer>().sharedMaterial;
 
             brokenMaterials.Add(key, value);
@@ -117,6 +110,22 @@ public class HouseManager : MonoBehaviour
 
     public static void Repair()
     {
+        //foreach (KeyValuePair<Material, Material> pair in brokenMaterials)
+        //{
+        //    for (int i = 0; i < assetStates.Length; i++)
+        //    {
+        //        print("Key: " + pair.Key.name);
+        //        print(assetStates[i].name);
+        //        print(pair.Key.name == assetStates[i].name);
+        //        if (pair.Key.name == assetStates[i].name)
+        //        {
+        //            assetStates[i] = brokenMaterials[pair.Key];
+        //            print("Repaired: " + assetStates[i].name);
+        //            break;
+        //        }
+        //    }
+        //}
+
         for (int i = 0; i < assetStates.Length; i++)
         {
             if (brokenMaterials.ContainsKey(assetStates[i]))

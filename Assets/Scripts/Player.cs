@@ -3,33 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Player : MonoBehaviour
+public class Player : Human
 {
-    public bool isMoveable = true;
+    //public bool isMoveable = true;
 
     private int layerMask;
-    NavMeshAgent agent;
+    //NavMeshAgent agent;
 
     // TODO: Put this to UI Manager
     public GameObject jobPanel;
 
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
+        base.Start();
         layerMask = LayerMask.GetMask("Ground");
-        agent = this.GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && isMoveable)
-        {
-            Move();
-        }
+        //print(agent.stoppingDistance);
+        //if (Input.GetMouseButtonDown(0) && isMoveable)
+        //{
+        //    Move();
+        //}
     }
 
-    void Move()
+    public override bool Moveable()
+    {
+        if (Input.GetMouseButton(0) && !agent.isStopped)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void Move()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -45,7 +55,8 @@ public class Player : MonoBehaviour
         Trigger trigger = other.GetComponent<Trigger>();
         if (trigger)
         {
-            isMoveable = false;
+            agent.isStopped = true;
+            //isMoveable = false;
             agent.SetDestination(other.gameObject.transform.position);
             SceneController.currentTrigger = other.gameObject;
             jobPanel.SetActive(true);
@@ -59,7 +70,8 @@ public class Player : MonoBehaviour
 
     public void DeclineJob()
     {
-        isMoveable = true;
+        agent.isStopped = false;
+        //isMoveable = true;
         jobPanel.SetActive(false);
     }
 }
