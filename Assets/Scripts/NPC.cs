@@ -6,8 +6,7 @@ public class NPC : Human
 {
     public bool isTalking;
     public Vector3 stationaryPos;
-    GameObject textbox;
-    TMPro.TMP_Text text;
+    //TMPro.TMP_Text text;
 
     // Start is called before the first frame update
     public override void Start()
@@ -19,10 +18,10 @@ public class NPC : Human
     }
 
 
-    public void SetText(string text)
-    {
-        this.text.text = text;
-    }
+    //public void SetText(string text)
+    //{
+    //    this.text.text = text;
+    //}
 
     public override bool Moveable()
     {

@@ -18,11 +18,14 @@ public class Player : Human
     {
         base.Start();
         layerMask = LayerMask.GetMask("Ground");
+        //FinishTalking();
+        //Talk("A");
     }
 
     // Update is called once per frame
     void Update()
     {
+        //print(agent.pathStatus);
         //print(agent.stoppingDistance);
         //if (Input.GetMouseButtonDown(0) && isMoveable)
         //{
@@ -32,20 +35,34 @@ public class Player : Human
 
     public override bool Moveable()
     {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        // TODO: Limit layer mask to ground and NPC
+        if (Physics.Raycast(ray, out hit))
+        {
+            if(hit.collider.CompareTag("NPC"))
+            {
+                return false;
+            }
+        }
+
         if (Input.GetMouseButton(0) && !agent.isStopped)
         {
             return true;
         }
+
         return false;
     }
 
-    public void Move()
+    public void Move(float stoppingDistance = 0f)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {
+            agent.stoppingDistance = stoppingDistance;
             agent.SetDestination(hit.point);
         }
     }
