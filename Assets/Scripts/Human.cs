@@ -9,6 +9,10 @@ public abstract class Human : MonoBehaviour
 
     GameObject textbox;
 
+    //TODO: Quick fix clipping issue
+    float offsetDistance = 5f;
+    //
+
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -27,6 +31,12 @@ public abstract class Human : MonoBehaviour
     {
         textbox = Instantiate(Resources.Load<GameObject>(LocalPath.prefabs + "Textbox"), this.gameObject.transform);
         textbox.GetComponentInChildren<TMPro.TMP_Text>().text = text;
+
+        //TODO: Quick fix clipping issue
+        Ray ray = new Ray(Camera.main.transform.position, textbox.transform.position - Camera.main.transform.position);
+        textbox.transform.position = ray.GetPoint(offsetDistance);
+        //textbox.transform.position = textbox.transform.localPosition + ray.GetPoint(offsetDistance);
+        //
     }
 
     public void FinishTalking()
