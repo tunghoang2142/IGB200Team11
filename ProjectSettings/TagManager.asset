@@ -10,6 +10,7 @@ TagManager:
   - SFX
   - Wire1
   - Wire2
+  - NPC
   layers:
   - Default
   - TransparentFX
