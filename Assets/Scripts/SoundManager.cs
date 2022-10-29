@@ -6,8 +6,10 @@ public class SoundManager : MonoBehaviour
 {
     public AudioSource bgmSource;
     public AudioClip defaultBGM;
-    private static SoundManager _instance;
-    private readonly string sfxTag = "SFX";
+    static float BGMVolume = 1f;
+    static float effectVolume = 1f;
+    static SoundManager _instance;
+    public static readonly string sfxTag = "SFX";
 
     void Awake()
     {
@@ -31,6 +33,7 @@ public class SoundManager : MonoBehaviour
             bgmSource = this.gameObject.AddComponent<AudioSource>();
             bgmSource.clip = defaultBGM;
             bgmSource.loop = true;
+            ChangeBGMVolumn(BGMVolume);
             bgmSource.Play();
         }
     }
@@ -48,7 +51,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlayEffect(string effectName, float volumn = 1f)
+    public void PlayEffect(string effectName)
     {
         AudioClip audioClip = Resources.Load<AudioClip>(LocalPath.sounds + effectName);
         if (audioClip != null)
@@ -56,15 +59,40 @@ public class SoundManager : MonoBehaviour
             AudioSource audioSource = Instantiate(new GameObject(), this.transform).AddComponent<AudioSource>();
             audioSource.clip = audioClip;
             audioSource.loop = false;
-            audioSource.volume = volumn;
+            audioSource.volume = effectVolume;
             audioSource.gameObject.tag = sfxTag;
             audioSource.Play();
         }
     }
 
-    public void ChangeBGMVolumn(float volumn)
+    public void PlayEffect(string effectName, float volume = 1f)
     {
-        bgmSource.volume = volumn;
+        AudioClip audioClip = Resources.Load<AudioClip>(LocalPath.sounds + effectName);
+        if (audioClip != null)
+        {
+            AudioSource audioSource = Instantiate(new GameObject(), this.transform).AddComponent<AudioSource>();
+            audioSource.clip = audioClip;
+            audioSource.loop = false;
+            audioSource.volume = volume;
+            audioSource.gameObject.tag = sfxTag;
+            audioSource.Play();
+        }
+    }
+
+    public void ChangeBGMVolumn(float volume)
+    {
+        BGMVolume = volume;
+        bgmSource.volume = volume;
+    }
+
+    public void ChangeEffectVolumn(float volume)
+    {
+        effectVolume = volume;
+        GameObject[] effects = GameObject.FindGameObjectsWithTag(sfxTag);
+        foreach (GameObject effect in effects)
+        {
+            effect.GetComponent<AudioSource>().volume = volume;
+        }
     }
 
     public void ChangeBGMClip(AudioClip clip)
