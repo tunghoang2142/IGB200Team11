@@ -5,6 +5,7 @@ using UnityEngine;
 public class NPC : Human
 {
     public bool isTalking;
+    public GameObject follow;
     public Vector3 stationaryPos;
     //TMPro.TMP_Text text;
 
@@ -13,15 +14,7 @@ public class NPC : Human
     {
         base.Start();
         stationaryPos = transform.position;
-        //textbox = Instantiate(Resources.Load<GameObject>(LocalPath.prefabs + "Textbox"), this.transform);
-        //text = textbox.GetComponentInChildren<TMPro.TMP_Text>();
     }
-
-
-    //public void SetText(string text)
-    //{
-    //    this.text.text = text;
-    //}
 
     public override bool Moveable()
     {
