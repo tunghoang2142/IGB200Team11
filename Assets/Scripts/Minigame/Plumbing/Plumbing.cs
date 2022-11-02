@@ -11,8 +11,26 @@ public abstract class Plumbing : MonoBehaviour
     public float collisionTimer = 0.1f; // How long collision stay before trigger collision event
     public bool isDragging = false;
 
+    // Delay before new pipe can be created
+    public static float createTimer = 0f;
+    public static readonly float createDelay = 0.3f;
+
     public float Diameter { get { return GetDiameter(); } }
     public float Length { get { return GetLength(); } }
+
+    public virtual void Update()
+    {
+        createTimer -= Time.deltaTime;
+    }
+
+    public bool CanCreate()
+    {
+        if (isDragging && createTimer <= 0f)
+        {
+            return true;
+        }
+        return false;
+    }
 
     float GetLength()
     {

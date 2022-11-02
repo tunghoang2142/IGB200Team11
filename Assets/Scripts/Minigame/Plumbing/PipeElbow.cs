@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PipeElbow : Plumbing
 {
-    public float minPipeLength = 0.5f;
+    public static float minPipeLength = 0.3f;
     float bufferLength = 0.01f;
 
     // Start is called before the first frame update
@@ -14,8 +14,9 @@ public class PipeElbow : Plumbing
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
+        base.Update();
         if (!Input.GetMouseButton(0) || PipeGameManager.Instance.isGameOver || PipeGameManager.Instance.isGamePause)
         {
             return;
@@ -23,7 +24,7 @@ public class PipeElbow : Plumbing
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (isDragging)
+        if (CanCreate())
         {
             float distance = Camera.main.transform.position.y - end.transform.position.y;
             Vector3 mousePos = ray.GetPoint(distance);
@@ -31,6 +32,7 @@ public class PipeElbow : Plumbing
 
             if (dragDirection.magnitude > minPipeLength)
             {
+                createTimer = createDelay;
                 GameObject pipe = Resources.Load<GameObject>(LocalPath.prefabs + PipeGameManager.PipePrefabName);
                 pipe = Instantiate(pipe);
                 Pipe script = pipe.GetComponent<Pipe>();

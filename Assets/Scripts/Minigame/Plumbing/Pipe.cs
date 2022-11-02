@@ -6,15 +6,10 @@ public class Pipe : Plumbing
 {
     public float minTurningDistance = 1f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
+        base.Update();
         if (PipeGameManager.Instance.isGameOver || PipeGameManager.Instance.isGamePause)
         {
             return;
@@ -33,7 +28,7 @@ public class Pipe : Plumbing
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (isDragging)
+        if (CanCreate())
         {
             float distance = Camera.main.transform.position.y - end.transform.position.y;
             Vector3 mousePos = ray.GetPoint(distance);
@@ -44,8 +39,10 @@ public class Pipe : Plumbing
             // Turning the pipe
             if (height > Diameter && height > minTurningDistance)
             {
+                createTimer = createDelay;
                 GameObject corner = Resources.Load<GameObject>(LocalPath.prefabs + PipeGameManager.ElbowPrefabName);
                 corner = Instantiate(corner, end.transform.position, end.transform.rotation);
+                
                 PipeElbow script = corner.GetComponent<PipeElbow>();
                 script.isDragging = true;
                 StrechPipe(-script.Length / 2);
