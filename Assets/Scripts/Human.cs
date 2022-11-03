@@ -31,6 +31,11 @@ public abstract class Human : MonoBehaviour
     {
         textbox = Instantiate(Resources.Load<GameObject>(LocalPath.prefabs + "Textbox"), this.gameObject.transform);
         textbox.GetComponentInChildren<TMPro.TMP_Text>().text = text;
+        textbox.GetComponentInChildren<TMPro.TMP_Text>().color = Color.black;
+        textbox.GetComponentInChildren<TMPro.TMP_Text>().fontSize = 12;
+        textbox.GetComponentInChildren<TMPro.TMP_Text>().extraPadding = true;
+        textbox.GetComponentInChildren<TMPro.TMP_Text>().outlineColor = Color.black;
+        textbox.GetComponentInChildren<TMPro.TMP_Text>().outlineWidth = 3f;
 
         //TODO: Quick fix clipping issue
         Ray ray = new Ray(Camera.main.transform.position, textbox.transform.position - Camera.main.transform.position);

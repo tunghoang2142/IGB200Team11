@@ -10,15 +10,26 @@ public class Player : Human
 
     private int layerMask;
     //NavMeshAgent agent;
-
+    private Animator anim;
+    public GameObject avatar;
     // TODO: Put this to UI Manager
     public GameObject jobPanel;
+    public GameObject JobsTr1;
+    public GameObject JobsTr2;
+    public GameObject JobsTr3;
+    private Trigger JobTrig1;
+    private Trigger JobTrig2;
+    private Trigger JobTrig3;
 
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
         layerMask = LayerMask.GetMask("Ground");
+        anim = avatar.GetComponent<Animator>();
+        JobTrig1 = JobsTr1.GetComponent<Trigger>();
+        JobTrig2 = JobsTr2.GetComponent<Trigger>();
+        JobTrig3 = JobsTr3.GetComponent<Trigger>();
         //FinishTalking();
         //Talk("A");
     }
@@ -32,7 +43,11 @@ public class Player : Human
         //{
         //    Move();
         //}
-        
+        //anim.SetFloat("Speed", stoppingDistance);
+        if (agent.velocity == Vector3.zero)
+        {
+            anim.SetBool("Walking", false);
+        }
     }
 
     public override bool Moveable()
@@ -46,6 +61,7 @@ public class Player : Human
             if(hit.collider.CompareTag("NPC"))
             {
                 return false;
+                anim.SetBool("Walking", false);
             }
         }
 
@@ -61,12 +77,13 @@ public class Player : Human
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-
+        anim.SetBool("Walking", true);
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {
             agent.stoppingDistance = stoppingDistance;
             agent.SetDestination(hit.point);
         }
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -79,12 +96,18 @@ public class Player : Human
             agent.SetDestination(other.gameObject.transform.position);
             SceneController.currentTrigger = other.gameObject;
             jobPanel.SetActive(true);
+            trigger.ActivateText();
+            
+            //anim.SetBool("Walking", false);
         }
     }
 
     public void AcceptJob()
     {
         SceneController.PlayMinigame();
+        JobTrig1.DeactivateText();
+        JobTrig2.DeactivateText();
+        JobTrig3.DeactivateText();
     }
 
     public void DeclineJob()
@@ -92,5 +115,8 @@ public class Player : Human
         agent.isStopped = false;
         //isMoveable = true;
         jobPanel.SetActive(false);
+        JobTrig1.DeactivateText();
+        JobTrig2.DeactivateText();
+        JobTrig3.DeactivateText();
     }
 }

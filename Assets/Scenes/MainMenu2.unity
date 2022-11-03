@@ -1266,6 +1266,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Options Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 1067830735264593363, guid: 81be4e7a2e2a77040bc90e3e81133559, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81be4e7a2e2a77040bc90e3e81133559, type: 3}
 --- !u!1 &1877693697
