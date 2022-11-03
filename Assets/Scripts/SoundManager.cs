@@ -33,7 +33,8 @@ public class SoundManager : MonoBehaviour
             bgmSource = this.gameObject.AddComponent<AudioSource>();
             bgmSource.clip = defaultBGM;
             bgmSource.loop = true;
-            ChangeBGMVolumn(BGMVolume);
+            ChangeBGMVolume(BGMVolume);
+            ChangeEffectVolume(effectVolume);
             bgmSource.Play();
         }
     }
@@ -79,13 +80,13 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void ChangeBGMVolumn(float volume)
+    public void ChangeBGMVolume(float volume)
     {
         BGMVolume = volume;
         bgmSource.volume = volume;
     }
 
-    public void ChangeEffectVolumn(float volume)
+    public void ChangeEffectVolume(float volume)
     {
         effectVolume = volume;
         GameObject[] effects = GameObject.FindGameObjectsWithTag(sfxTag);
