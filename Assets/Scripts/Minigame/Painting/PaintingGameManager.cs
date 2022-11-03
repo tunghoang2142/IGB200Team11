@@ -38,7 +38,7 @@ public class PaintingGameManager : GameManager
 
         float percentage = painter.GetPercentage();
         ((PaintingUIManager)UIManager).DisplayPercentage(percentage);
-        if (percentage > 99)
+        if (percentage > 99.8f)
         {
             Win();
             return;
@@ -47,6 +47,7 @@ public class PaintingGameManager : GameManager
         ((PaintingUIManager)UIManager).DisplayPaint(painter.paintAmount);
         if (painter.paintAmount < 0)
         {
+            Cursor.visible = true;
             GameOver("You run out of paint!");
         }
     }

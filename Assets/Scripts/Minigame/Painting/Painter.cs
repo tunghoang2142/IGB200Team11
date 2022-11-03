@@ -9,7 +9,13 @@ public class Painter : MonoBehaviour
     public Terrain terrain; // Only work on normalize rotation
     public int brushWidth = 50;
     public int brushHeight = 100;
-    public float paintAmount = 25f;
+    public float paintAmount = 15f;
+
+    // Set layer to ignore
+    public int[] ignoreLayers;
+
+    // Additional paint lost on painting on ignore layer
+    public float painPenalty = 1f;
 
     Texture2D oldTexture;
     float[] layersWeight;
@@ -17,23 +23,42 @@ public class Painter : MonoBehaviour
     float heightScale;
 
     readonly int painLayer = 1;
+    int layerMask;
 
     // Start is called before the first frame update
     void Start()
     {
+        foreach (int layer in ignoreLayers)
+        {
+            AddIgnoreLayer(layer);
+        }
+
         // Calculate weight for each layer
         layersWeight = new float[terrain.terrainData.terrainLayers.Length];
         float[,,] splatmap = terrain.terrainData.GetAlphamaps(0, 0, terrain.terrainData.alphamapWidth, terrain.terrainData.alphamapHeight);
+
         for (int mapWidth = 0; mapWidth < terrain.terrainData.alphamapWidth; mapWidth++)
         {
             for (int mapHeight = 0; mapHeight < terrain.terrainData.alphamapHeight; mapHeight++)
             {
                 for (int layer = 0; layer < terrain.terrainData.terrainLayers.Length; layer++)
                 {
+                    // Check if ignored layer
+                    if (layerMask == (layerMask | (1 << layer)))
+                    {
+                        if (splatmap[mapHeight, mapWidth, layer] > 0)
+                        {
+                            splatmap[mapHeight, mapWidth, layer] = 1;
+                            continue;
+                        }
+                    }
+
                     layersWeight[layer] += splatmap[mapHeight, mapWidth, layer];
                 }
             }
         }
+
+        terrain.terrainData.SetAlphamaps(0, 0, splatmap);
 
         if (!brush)
         {
@@ -48,14 +73,21 @@ public class Painter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(PaintingGameManager.Instance.isGamePause || PaintingGameManager.Instance.isGameOver)
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            foreach (var weight in layersWeight)
+            {
+                print(weight);
+            }
+        }
+
+        if (PaintingGameManager.Instance.isGamePause || PaintingGameManager.Instance.isGameOver)
         {
             return;
         }
 
         UpdatePos();
         GlowPaintedArea(painLayer);
-        //print("Percentage: " + GetPercentage(painLayer) * 100);
 
         if (Input.GetMouseButton(0))
         {
@@ -76,7 +108,7 @@ public class Painter : MonoBehaviour
             }
             else if (mapPoint.x + brushSize.x > terrain.terrainData.alphamapWidth)
             {
-                brushSize.x = terrain.terrainData.alphamapWidth - mapPoint.x - 1;
+                brushSize.x = terrain.terrainData.alphamapWidth - mapPoint.x;
             }
 
             if (mapPoint.y < 0)
@@ -86,7 +118,7 @@ public class Painter : MonoBehaviour
             }
             else if (mapPoint.y + brushSize.y > terrain.terrainData.alphamapHeight)
             {
-                brushSize.y = terrain.terrainData.alphamapHeight - mapPoint.y - 1;
+                brushSize.y = terrain.terrainData.alphamapHeight - mapPoint.y;
             }
 
             PaintMap((int)mapPoint.x, (int)mapPoint.y, (int)brushSize.x, (int)brushSize.y);
@@ -124,19 +156,47 @@ public class Painter : MonoBehaviour
     void PaintMap(int x, int y, int width, int height)
     {
         float[,,] splatmap = terrain.terrainData.GetAlphamaps(x, y, width, height);
+
         for (int mapWidth = 0; mapWidth < width; mapWidth++)
         {
             for (int mapHeight = 0; mapHeight < height; mapHeight++)
             {
+                bool isIgnored = false;
+
+                for (int i = 0; i < terrain.terrainData.terrainLayers.Length; i++)
+                {
+                    // Check if is ignored layer
+                    if (layerMask == (layerMask | (1 << i)))
+                    {
+                        if (splatmap[mapHeight, mapWidth, i] > 0)
+                        {
+                            // Apply paint penalty
+                            paintAmount -= splatmap[mapHeight, mapWidth, painLayer] / (brushWidth * brushHeight) * painPenalty * Time.deltaTime;
+                            isIgnored = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (isIgnored)
+                {
+                    continue;
+                }
+
                 //TODO: Check number of layers and select layer for painting
                 layersWeight[0] -= splatmap[mapHeight, mapWidth, 0];
                 splatmap[mapHeight, mapWidth, 0] = 0;
-                layersWeight[1] += 1 - splatmap[mapHeight, mapWidth, 1];
-                splatmap[mapHeight, mapWidth, 1] = 1;
+                layersWeight[painLayer] += 1 - splatmap[mapHeight, mapWidth, painLayer];
+                splatmap[mapHeight, mapWidth, painLayer] = 1;
             }
         }
 
         terrain.terrainData.SetAlphamaps(x, y, splatmap);
+    }
+
+    void AddIgnoreLayer(int layer)
+    {
+        layerMask |= (1 << layer);
     }
 
     public float GetPercentage()
