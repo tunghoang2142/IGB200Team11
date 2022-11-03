@@ -7,7 +7,6 @@ public class SceneController : MonoBehaviour
 {
     public static GameObject currentTrigger;
     static SceneController _instance;
-    public bool isGamePause;
 
     private void Awake()
     {

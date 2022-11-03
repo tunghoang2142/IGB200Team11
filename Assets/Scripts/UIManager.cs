@@ -8,7 +8,7 @@ public abstract class UIManager : MonoBehaviour
 
     public virtual void Pause()
     {
-        if (SceneController.Instance.isGamePause)
+        if (GameManager.isGamePause)
         {
             pausePanel.SetActive(true);
         }

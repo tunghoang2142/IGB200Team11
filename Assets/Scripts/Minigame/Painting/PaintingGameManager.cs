@@ -29,8 +29,10 @@ public class PaintingGameManager : GameManager
         Cursor.visible = false;
     }
 
-    private void Update()
+    public override void Update()
     {
+        base.Update();
+
         if (isGamePause || isGameOver)
         {
             return;

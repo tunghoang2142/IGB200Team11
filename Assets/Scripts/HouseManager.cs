@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HouseManager : MonoBehaviour
+public class HouseManager : GameManager
 {
     readonly static string broken = "damaged";
     readonly static string repaired = "repaired";
@@ -29,8 +29,10 @@ public class HouseManager : MonoBehaviour
 
     public static HouseManager Instance { get { return _instance; } }
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
+
         if (environmentAssets == null)
         {
             environmentAssets = new List<GameObject>();
@@ -63,13 +65,6 @@ public class HouseManager : MonoBehaviour
                 }
             }
         }
-
-        // TODO: Remove this
-        //foreach (Material material in assetStates)
-        //{
-        //    print(material.name);
-        //}
-        //
     }
 
     public void SetBrokenMaterials(Trigger trigger)
@@ -110,22 +105,6 @@ public class HouseManager : MonoBehaviour
 
     public static void Repair()
     {
-        //foreach (KeyValuePair<Material, Material> pair in brokenMaterials)
-        //{
-        //    for (int i = 0; i < assetStates.Length; i++)
-        //    {
-        //        print("Key: " + pair.Key.name);
-        //        print(assetStates[i].name);
-        //        print(pair.Key.name == assetStates[i].name);
-        //        if (pair.Key.name == assetStates[i].name)
-        //        {
-        //            assetStates[i] = brokenMaterials[pair.Key];
-        //            print("Repaired: " + assetStates[i].name);
-        //            break;
-        //        }
-        //    }
-        //}
-
         for (int i = 0; i < assetStates.Length; i++)
         {
             if (brokenMaterials.ContainsKey(assetStates[i]))
@@ -134,4 +113,8 @@ public class HouseManager : MonoBehaviour
             }
         }
     }
+
+    public override void Win() { return; }
+    public override void GameOver(string cause) { return; }
+    public override void GameOver() { return; }
 }

@@ -25,8 +25,10 @@ public class PipeGameManager : GameManager
     public static PipeGameManager Instance { get { return _instance; } }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
+        base.Update();
+
         if (isGamePause || isGameOver)
         {
             return;

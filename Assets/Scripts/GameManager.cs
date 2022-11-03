@@ -5,8 +5,9 @@ using UnityEngine;
 public abstract class GameManager : MonoBehaviour
 {
     public UIManager UIManager;
-    public bool isGamePause = false;
+    public static bool isGamePause = false;
     public bool isGameOver = false;
+    KeyCode pauseKey = KeyCode.Escape;
 
     // Start is called before the first frame update
     public virtual void Start()
@@ -19,16 +20,26 @@ public abstract class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public virtual void Update()
+    {
+        if (Input.GetKeyDown(pauseKey))
+        {
+            Pause();
+        }
+    }
+
     public virtual void Pause()
     {
         isGamePause = !isGamePause;
         if (isGamePause)
         {
             Time.timeScale = 0;
+            print("Paused");
         }
         else
         {
             Time.timeScale = 1;
+            print("Unpause");
         }
 
         UIManager.Pause();

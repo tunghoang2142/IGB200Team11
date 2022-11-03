@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4366757, g: 0.48427194, b: 0.5645252, a: 1}
+  m_IndirectSpecularColor: {r: 0.43667555, g: 0.48427182, b: 0.56452405, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -942,7 +942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686427454dc95427183cd50a7e90d17b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pausePanel: {fileID: 0}
+  pausePanel: {fileID: 1667076084}
   winPanel: {fileID: 1439887709}
   gameoverPanel: {fileID: 24630841}
   timer: {fileID: 1200467479}
@@ -15122,6 +15122,11 @@ Transform:
   m_Father: {fileID: 598537828}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!1 &1667076084 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6325517424370152613, guid: e2dccf26947bf10479342d19fcb3f026, type: 3}
+  m_PrefabInstance: {fileID: 2051824861}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1710391579
 GameObject:
   m_ObjectHideFlags: 0
@@ -17288,7 +17293,6 @@ MonoBehaviour:
   expansionSpeed: 3
   collisionTimer: 0.1
   isDragging: 0
-  minPipeLength: 0.5
 --- !u!1 &2135749750
 GameObject:
   m_ObjectHideFlags: 0

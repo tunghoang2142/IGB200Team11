@@ -81,7 +81,7 @@ public class Painter : MonoBehaviour
             }
         }
 
-        if (PaintingGameManager.Instance.isGamePause || PaintingGameManager.Instance.isGameOver)
+        if (PaintingGameManager.isGamePause || PaintingGameManager.Instance.isGameOver)
         {
             return;
         }

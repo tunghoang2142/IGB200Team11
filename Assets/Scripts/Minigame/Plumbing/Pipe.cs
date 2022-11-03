@@ -10,7 +10,8 @@ public class Pipe : Plumbing
     public override void Update()
     {
         base.Update();
-        if (PipeGameManager.Instance.isGameOver || PipeGameManager.Instance.isGamePause)
+
+        if (PipeGameManager.Instance.isGameOver || GameManager.isGamePause)
         {
             return;
         }

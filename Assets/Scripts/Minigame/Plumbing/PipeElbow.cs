@@ -17,7 +17,7 @@ public class PipeElbow : Plumbing
     public override void Update()
     {
         base.Update();
-        if (!Input.GetMouseButton(0) || PipeGameManager.Instance.isGameOver || PipeGameManager.Instance.isGamePause)
+        if (!Input.GetMouseButton(0) || PipeGameManager.Instance.isGameOver || GameManager.isGamePause)
         {
             return;
         }
